@@ -29,17 +29,13 @@
     <!-- HERO / PERKENALAN -->
     <header id="hero" class="hero">
         <div class="scene scene-cat">
-            <!-- Gamepad Hologram -->
-            <div class="holo-gamepad">
-                <div class="holo-emoji">🎮</div>
-            </div>
+            <!-- Gamepad 3D Hologram -->
+            <div id="pad3d" class="holo3d"></div>
             <div class="scene-shadow"></div>
         </div>
         <div class="scene">
-            <!-- Mobil Hologram -->
-            <div class="holo-car">
-                <img src="dhn1.png" alt="Mobil hologram">
-            </div>
+            <!-- Mobil 3D Hologram -->
+            <div id="car3d" class="holo3d"></div>
             <div class="scene-shadow"></div>
         </div>
         <div class="hero-inner">
@@ -168,6 +164,8 @@
         <p>© 2026 Dhenzain. Dibuat dengan <span class="accent">OpenCode</span>.</p>
     </footer>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="hologram.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

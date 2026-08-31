@@ -80,24 +80,4 @@ scrollTopBtn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// ===== Karakter ikuti cursor =====
-const robotScene = document.querySelector('.scene:not(.scene-cat)');
-const catScene = document.querySelector('.scene-cat');
-
-const isMobile = window.matchMedia('(max-width: 600px)').matches;
-
-if (robotScene && catScene && !isMobile) {
-    window.addEventListener('mousemove', (e) => {
-        const x = (e.clientX / window.innerWidth - 0.5) * 2;
-        const y = (e.clientY / window.innerHeight - 0.5) * 2;
-
-        const rotY = x * 18;
-        const rotX = -y * 10;
-
-        robotScene.style.transform = `perspective(900px) rotateY(${-rotY}deg) rotateX(${rotX}deg)`;
-        catScene.style.transform = `perspective(900px) rotateY(${rotY}deg) rotateX(${rotX}deg)`;
-    });
-
-    robotScene.style.transition = 'transform 0.25s ease-out';
-    catScene.style.transition = 'transform 0.25s ease-out';
-}
+// Cursor-follow untuk objek 3D sekarang ditangani di hologram.js
