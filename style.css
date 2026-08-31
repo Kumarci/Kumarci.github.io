@@ -8,6 +8,8 @@
     --accent: #ffffff;
     --accent-soft: #cfcfd6;
     --border: #2a2a33;
+    --holo: #4df0ff;
+    --holo-glow: rgba(77, 240, 255, 0.5);
 }
 
 * {
@@ -354,6 +356,170 @@ body {
 @keyframes tailSwing {
     0%, 100% { transform: rotate(18deg); }
     50%      { transform: rotate(-8deg); }
+}
+
+/* ===== Mobil Hologram ===== */
+.holo-car {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 260px;
+    height: 200px;
+    margin-left: -130px;
+    filter: drop-shadow(0 0 22px var(--holo-glow));
+    transform-style: preserve-3d;
+    animation: holoCarSpin 6s ease-in-out infinite;
+    opacity: 0.9;
+}
+
+@keyframes holoCarSpin {
+    0%, 100% { transform: rotateX(-12deg) rotateY(-18deg) translateY(0); }
+    50%      { transform: rotateX(-12deg) rotateY(-18deg) translateY(-16px); }
+}
+
+.car-body {
+    position: absolute;
+    left: 50%;
+    bottom: 40px;
+    margin-left: -90px;
+    width: 180px;
+    height: 60px;
+    background: linear-gradient(180deg, rgba(77,240,255,0.5), rgba(38,120,160,0.35));
+    border: 2px solid var(--holo);
+    border-radius: 18px 60px 18px 60px;
+    box-shadow: inset 0 0 20px var(--holo-glow), 0 0 30px var(--holo-glow);
+    background-image: linear-gradient(rgba(77,240,255,0.15) 1px, transparent 1px);
+    background-size: 100% 6px;
+}
+
+.car-cabin {
+    position: absolute;
+    left: 50%;
+    bottom: 96px;
+    margin-left: -45px;
+    width: 90px;
+    height: 40px;
+    background: linear-gradient(180deg, rgba(77,240,255,0.45), rgba(38,120,160,0.25));
+    border: 2px solid var(--holo);
+    border-radius: 14px 30px 14px 14px;
+    box-shadow: 0 0 20px var(--holo-glow);
+}
+
+.car-light {
+    position: absolute;
+    bottom: 74px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--holo);
+    box-shadow: 0 0 16px 6px var(--holo-glow);
+    animation: holoBlink 2s ease-in-out infinite;
+}
+
+.car-light.left { left: 34%; }
+.car-light.right { right: 34%; }
+
+.car-wheel {
+    position: absolute;
+    bottom: 20px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 5px solid var(--holo);
+    background: rgba(77,240,255,0.25);
+    box-shadow: 0 0 18px var(--holo-glow);
+}
+
+.car-wheel.back { left: 26%; }
+.car-wheel.front { right: 26%; }
+
+/* ===== Gamepad Hologram ===== */
+.holo-gamepad {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 240px;
+    height: 200px;
+    margin-left: -120px;
+    filter: drop-shadow(0 0 22px var(--holo-glow));
+    transform-style: preserve-3d;
+    animation: holoPad 5s ease-in-out infinite;
+    opacity: 0.9;
+}
+
+@keyframes holoPad {
+    0%, 100% { transform: rotateX(-14deg) rotateY(12deg) translateY(0); }
+    50%      { transform: rotateX(-14deg) rotateY(12deg) translateY(-16px); }
+}
+
+.gp-body {
+    position: absolute;
+    left: 50%;
+    bottom: 40px;
+    margin-left: -70px;
+    width: 140px;
+    height: 90px;
+    background: linear-gradient(180deg, rgba(77,240,255,0.45), rgba(38,120,160,0.28));
+    border: 2px solid var(--holo);
+    border-radius: 24px;
+    box-shadow: inset 0 0 20px var(--holo-glow), 0 0 30px var(--holo-glow);
+}
+
+.gp-face {
+    position: absolute;
+    top: 6px;
+    left: 50%;
+    margin-left: -18px;
+    width: 36px;
+    height: 24px;
+    background: rgba(77,240,255,0.35);
+    border: 2px solid var(--holo);
+    border-radius: 8px;
+}
+
+.gp-a, .gp-b, .gp-x, .gp-y {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--holo);
+    box-shadow: 0 0 10px var(--holo-glow);
+}
+
+.gp-a { right: 20px; top: 40px; }
+.gp-b { right: 8px;  top: 30px; }
+.gp-x { right: 30px; top: 54px; }
+.gp-y { right: 44px; top: 34px; }
+
+.gp-grip {
+    position: absolute;
+    bottom: -46px;
+    width: 44px;
+    height: 52px;
+    background: linear-gradient(180deg, rgba(77,240,255,0.4), rgba(38,120,160,0.2));
+    border: 2px solid var(--holo);
+    border-radius: 0 0 18px 18px;
+    box-shadow: 0 0 16px var(--holo-glow);
+}
+
+.gp-grip.left { left: 8px; transform: rotate(3deg); }
+.gp-grip.right { right: 8px; transform: rotate(-3deg); }
+
+/* Scanline overlay untuk efek hologram */
+.scene::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        to bottom,
+        rgba(77,240,255,0.04) 0px,
+        rgba(77,240,255,0.04) 1px,
+        transparent 1px,
+        transparent 4px
+    );
+    z-index: 2;
+    mix-blend-mode: overlay;
 }
 
 /* ===== Navigasi ===== */
@@ -703,8 +869,17 @@ body {
         left: 50%;
         margin-left: -110px;
         bottom: 3%;
-        width: 220px;
-        height: 240px;
+        width: 240px;
+        height: 200px;
+    }
+
+    .scene-cat {
+        display: none;
+    }
+
+    .holo-car {
+        transform: scale(0.7);
+        transform-origin: bottom center;
     }
 
     .hero-inner {
