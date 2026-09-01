@@ -413,6 +413,22 @@ body {
     justify-content: space-between;
 }
 
+.nav-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+}
+
+.nav-dither {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    display: block;
+    background: #000;
+}
+
 .logo {
     font-size: 1.3rem;
     font-weight: 700;

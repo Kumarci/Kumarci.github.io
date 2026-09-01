@@ -5,8 +5,8 @@
     const canvas = document.getElementById('dither');
     if (!canvas) return;
 
-    // Ukuran canvas resolve
-    const SIZE = 160;              // resolusi render
+    // Ukuran canvas resolve (mengikuti atribut width/height canvas navbar)
+    const SIZE = canvas.width || 40;
     const GRID = 2;                // gridSize
     const SPEED = 0.02;            // animationSpeed
 
