@@ -1,13 +1,13 @@
-// Efek sederhana: header berubah saat halaman di-scroll
+// ===== Navbar berubah saat scroll =====
 const navbar = document.querySelector('.navbar');
 
 window.addEventListener('scroll', () => {
     if (window.scrollY > 40) {
-        navbar.style.boxShadow = '0 4px 12px rgba(0,0,0,0.5)';
-        navbar.style.background = 'rgba(10,10,10,0.95)';
+        navbar.style.background = 'rgba(0,0,0,0.92)';
+        navbar.style.boxShadow = '0 4px 20px rgba(0,0,0,0.6)';
     } else {
+        navbar.style.background = 'rgba(0,0,0,0.6)';
         navbar.style.boxShadow = 'none';
-        navbar.style.background = 'rgba(10,10,10,0.85)';
     }
 });
 
@@ -16,7 +16,7 @@ const particleContainer = document.createElement('div');
 particleContainer.className = 'particles';
 document.body.appendChild(particleContainer);
 
-const particleCount = 24;
+const particleCount = 22;
 for (let i = 0; i < particleCount; i++) {
     const p = document.createElement('span');
     p.className = 'particle';
@@ -29,58 +29,89 @@ for (let i = 0; i < particleCount; i++) {
     particleContainer.appendChild(p);
 }
 
-// ===== Scroll Reveal untuk SEMUA elemen animasi (staggered) =====
+// ===== Kinetic Typewriter Nama =====
+const nameText = 'DHENZAIN';
+const typeEl = document.getElementById('typewriter');
+let charIdx = 0;
+
+function typeWriter() {
+    if (charIdx < nameText.length) {
+        typeEl.textContent = nameText.slice(0, charIdx + 1);
+        charIdx++;
+        setTimeout(typeWriter, 140);
+    }
+}
+setTimeout(typeWriter, 600);
+
+// ===== Parallax (hero + banner) =====
+const parallaxEls = document.querySelectorAll('[data-parallax]');
+
+window.addEventListener('scroll', () => {
+    const y = window.scrollY;
+    parallaxEls.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        const img = el.firstElementChild || null;
+        if (!img) return;
+        const speed = 0.25;
+        const offset = (rect.top + rect.height / 2 - window.innerHeight / 2) * -speed;
+        img.style.transform = `translateY(${offset}px) scale(1.05)`;
+    });
+});
+
+// ===== Scroll Reveal (staggered) =====
 const revealEls = document.querySelectorAll(
-    '.card, .section-title, .section-text, .gallery-item, .contact-btn'
+    '.section-title, .section-text, .about-photo, .banner, .gallery-item, .contact-btn'
 );
 
 const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
         if (entry.isIntersecting) {
-            // Stagger: delay sesuai urutan elemen dalam container-nya
-            const idx = Array.prototype.indexOf.call(entry.target.parentElement.children, entry.target);
+            const parent = entry.target.parentElement;
+            const idx = Array.prototype.indexOf.call(parent.children, entry.target);
             const delay = Math.min(idx * 90, 400);
             entry.target.style.transitionDelay = delay + 'ms';
             entry.target.style.opacity = '1';
             entry.target.style.transform = 'translateY(0)';
-            entry.target.dataset.revealed = 'true';
+            entry.target.style.filter = 'none';
+            revealObserver.unobserve(entry.target);
         }
     });
 }, { threshold: 0.12 });
 
 revealEls.forEach((el) => {
     el.style.opacity = '0';
-    el.style.transform = 'translateY(28px)';
-    el.style.transition = 'opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1)';
+    el.style.transform = 'translateY(30px)';
+    el.style.transition = 'opacity 0.8s cubic-bezier(0.16,1,0.3,1), transform 0.8s cubic-bezier(0.16,1,0.3,1)';
     revealObserver.observe(el);
 });
 
-// ===== Text hero masuk halus saat load =====
-const heroTitle = document.querySelector('.hero-name');
-const heroTag = document.querySelector('.hero-tagline');
-const heroBio = document.querySelector('.hero-bio');
-const heroSocials = document.querySelector('.hero-socials');
+// ===== Lightbox =====
+const lightbox = document.getElementById('lightbox');
+const lightboxImg = document.getElementById('lightboxImg');
+const lightboxCap = document.getElementById('lightboxCap');
+const lightboxClose = document.getElementById('lightboxClose');
 
-setTimeout(() => {
-    heroTitle.style.transition = 'opacity 1s ease, transform 1s ease';
-    heroTitle.style.opacity = '1';
-    heroTitle.style.transform = 'translateY(0)';
+document.querySelectorAll('.gallery-item').forEach((item) => {
+    item.addEventListener('click', () => {
+        lightboxImg.src = item.dataset.src;
+        lightboxCap.textContent = item.dataset.cap || '';
+        lightbox.classList.add('open');
+        lightbox.setAttribute('aria-hidden', 'false');
+    });
+});
 
-    heroTag.style.transition = 'opacity 1s ease 0.2s, transform 1s ease 0.2s';
-    heroTag.style.opacity = '1';
+function closeLightbox() {
+    lightbox.classList.remove('open');
+    lightbox.setAttribute('aria-hidden', 'true');
+}
 
-    if (heroBio) {
-        heroBio.style.transition = 'opacity 1s ease 0.3s, transform 1s ease 0.3s';
-        heroBio.style.opacity = '1';
-        heroBio.style.transform = 'translateY(0)';
-    }
-
-    if (heroSocials) {
-        heroSocials.style.transition = 'opacity 1s ease 0.5s, transform 1s ease 0.5s';
-        heroSocials.style.opacity = '1';
-        heroSocials.style.transform = 'translateY(0)';
-    }
-}, 200);
+lightboxClose.addEventListener('click', closeLightbox);
+lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+});
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeLightbox();
+});
 
 // ===== Tombol Scroll ke Atas =====
 const scrollTopBtn = document.getElementById('scrollTop');
@@ -96,5 +127,3 @@ window.addEventListener('scroll', () => {
 scrollTopBtn.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
 });
-
-// Cursor-follow untuk objek 3D sekarang ditangani di hologram.js
