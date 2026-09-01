@@ -24,27 +24,34 @@ for (let i = 0; i < particleCount; i++) {
     p.style.width = size + 'px';
     p.style.height = size + 'px';
     p.style.left = Math.random() * 100 + '%';
-    p.style.animationDuration = Math.random() * 20 + 12 + 's';
-    p.style.animationDelay = Math.random() * 15 + 's';
+    p.style.animationDuration = Math.random() * 24 + 18 + 's';
+    p.style.animationDelay = Math.random() * 20 + 's';
     particleContainer.appendChild(p);
 }
 
-// ===== Scroll Reveal untuk SEMUA elemen animasi =====
-const revealEls = document.querySelectorAll('.card, .section-title, .section-text, .gallery-item, .contact-btn');
+// ===== Scroll Reveal untuk SEMUA elemen animasi (staggered) =====
+const revealEls = document.querySelectorAll(
+    '.card, .section-title, .section-text, .gallery-item, .contact-btn'
+);
 
 const revealObserver = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
         if (entry.isIntersecting) {
+            // Stagger: delay sesuai urutan elemen dalam container-nya
+            const idx = Array.prototype.indexOf.call(entry.target.parentElement.children, entry.target);
+            const delay = Math.min(idx * 90, 400);
+            entry.target.style.transitionDelay = delay + 'ms';
             entry.target.style.opacity = '1';
             entry.target.style.transform = 'translateY(0)';
+            entry.target.dataset.revealed = 'true';
         }
     });
-}, { threshold: 0.15 });
+}, { threshold: 0.12 });
 
 revealEls.forEach((el) => {
     el.style.opacity = '0';
-    el.style.transform = 'translateY(24px)';
-    el.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+    el.style.transform = 'translateY(28px)';
+    el.style.transition = 'opacity 0.7s cubic-bezier(0.16,1,0.3,1), transform 0.7s cubic-bezier(0.16,1,0.3,1)';
     revealObserver.observe(el);
 });
 
