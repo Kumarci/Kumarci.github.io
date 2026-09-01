@@ -490,6 +490,15 @@ body {
     border: 4px solid var(--bg);
 }
 
+.profile-pic canvas {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    display: block;
+    border: 4px solid var(--bg);
+    background: #000;
+}
+
 .hero-bio {
     color: var(--accent-soft);
     font-size: 1.05rem;
