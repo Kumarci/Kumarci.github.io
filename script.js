@@ -51,7 +51,8 @@ revealEls.forEach((el) => {
 // ===== Text hero masuk halus saat load =====
 const heroTitle = document.querySelector('.hero-name');
 const heroTag = document.querySelector('.hero-tagline');
-const heroBtn = document.querySelector('.hero .btn');
+const heroBio = document.querySelector('.hero-bio');
+const heroSocials = document.querySelector('.hero-socials');
 
 setTimeout(() => {
     heroTitle.style.transition = 'opacity 1s ease, transform 1s ease';
@@ -61,8 +62,17 @@ setTimeout(() => {
     heroTag.style.transition = 'opacity 1s ease 0.2s, transform 1s ease 0.2s';
     heroTag.style.opacity = '1';
 
-    heroBtn.style.transition = 'opacity 1s ease 0.4s, transform 1s ease 0.4s';
-    heroBtn.style.opacity = '1';
+    if (heroBio) {
+        heroBio.style.transition = 'opacity 1s ease 0.3s, transform 1s ease 0.3s';
+        heroBio.style.opacity = '1';
+        heroBio.style.transform = 'translateY(0)';
+    }
+
+    if (heroSocials) {
+        heroSocials.style.transition = 'opacity 1s ease 0.5s, transform 1s ease 0.5s';
+        heroSocials.style.opacity = '1';
+        heroSocials.style.transform = 'translateY(0)';
+    }
 }, 200);
 
 // ===== Tombol Scroll ke Atas =====
